@@ -1,4 +1,4 @@
-package com.example.ex1
+package com.example.roadevadergame
 
 import org.junit.Test
 

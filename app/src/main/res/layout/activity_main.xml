@@ -1,12 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
 
-    <com.example.ex1.GameView
-        android:id="@+id/gameView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+    <TextView
+        android:id="@+id/livesText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Lives: 3"
+        android:textSize="20sp"
+        android:layout_margin="10dp"/>
 
-</FrameLayout>
+    <View
+        android:id="@+id/car"
+        android:layout_width="80dp"
+        android:layout_height="120dp"
+        android:background="#0000FF"
+        android:layout_marginTop="600dp"
+        android:layout_marginLeft="300dp"/>
+
+    <View
+        android:id="@+id/enemy"
+        android:layout_width="80dp"
+        android:layout_height="120dp"
+        android:background="#FF0000"
+        android:layout_marginTop="0dp"
+        android:layout_marginLeft="300dp"/>
+
+    <Button
+        android:id="@+id/leftBtn"
+        android:layout_width="120dp"
+        android:layout_height="100dp"
+        android:text="LEFT"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"/>
+
+    <Button
+        android:id="@+id/rightBtn"
+        android:layout_width="120dp"
+        android:layout_height="100dp"
+        android:text="RIGHT"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"/>
+
+    <Button
+        android:id="@+id/restartBtn"
+        android:layout_width="200dp"
+        android:layout_height="100dp"
+        android:text="RESTART"
+        android:visibility="gone"
+        android:layout_centerInParent="true"/>
+
+</RelativeLayout>

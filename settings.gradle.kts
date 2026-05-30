@@ -22,5 +22,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "ex1"
+rootProject.name = "RoadEvaderGame"
 include(":app")
+ 
