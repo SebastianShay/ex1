@@ -15,7 +15,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var carLane0: ImageView
     private lateinit var carLane2: ImageView
 
-    // משתני הלבבות
     private lateinit var heart1: ImageView
     private lateinit var heart2: ImageView
     private lateinit var heart3: ImageView
