@@ -1,34 +1,36 @@
 package com.example.roadevadergame
 
-import android.os.Bundle
-import android.os.Handler
+import android.content.Context
+import android.os.*
 import android.view.View
-import android.widget.Button
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import kotlin.random.Random
 
 class MainActivity : AppCompatActivity() {
+    private val ROWS = 5
+    private val COLS = 3
+    private lateinit var obstacleMatrix: Array<Array<ImageView>>
+    private lateinit var playerCar: ImageView
+    private lateinit var carLane0: ImageView
+    private lateinit var carLane2: ImageView
 
-    private lateinit var car: View
-    private lateinit var enemy: View
-    private lateinit var leftBtn: Button
-    private lateinit var rightBtn: Button
-    private lateinit var restartBtn: Button
-    private lateinit var livesText: TextView
+    // משתני הלבבות
+    private lateinit var heart1: ImageView
+    private lateinit var heart2: ImageView
+    private lateinit var heart3: ImageView
 
     private var lives = 3
-    private var carX = 300f
+    private var carLane = 1
     private var gameOver = false
-
-    private val handler = Handler()
+    private val handler = Handler(Looper.getMainLooper())
 
     private val gameLoop = object : Runnable {
         override fun run() {
             if (!gameOver) {
-                moveEnemy()
+                moveObstacles()
                 checkCollision()
-                handler.postDelayed(this, 30)
+                handler.postDelayed(this, 500)
             }
         }
     }
@@ -37,95 +39,92 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        car = findViewById(R.id.car)
-        enemy = findViewById(R.id.enemy)
+        // קישור לרכיבים מה-XML
+        playerCar = findViewById(R.id.playerCar)
+        carLane0 = findViewById(R.id.car_lane_0)
+        carLane2 = findViewById(R.id.car_lane_2)
 
-        leftBtn = findViewById(R.id.leftBtn)
-        rightBtn = findViewById(R.id.rightBtn)
-        restartBtn = findViewById(R.id.restartBtn)
-        livesText = findViewById(R.id.livesText)
+        heart1 = findViewById(R.id.heart1)
+        heart2 = findViewById(R.id.heart2)
+        heart3 = findViewById(R.id.heart3)
 
-        updateLives()
-
-        car.x = carX
-
-        leftBtn.setOnClickListener {
-            if (!gameOver) {
-                carX -= 50f
-                car.x = carX
-            }
+        obstacleMatrix = Array(ROWS) { row ->
+            Array(COLS) { col -> findViewById(resources.getIdentifier("obs_${row}_${col}", "id", packageName)) }
         }
 
-        rightBtn.setOnClickListener {
-            if (!gameOver) {
-                carX += 50f
-                car.x = carX
-            }
+        findViewById<Button>(R.id.leftBtn).setOnClickListener {
+            if (carLane > 0) { carLane--; updateCarPosition() }
         }
-
-        restartBtn.setOnClickListener {
-            restartGame()
+        findViewById<Button>(R.id.rightBtn).setOnClickListener {
+            if (carLane < COLS - 1) { carLane++; updateCarPosition() }
         }
+        findViewById<Button>(R.id.restartBtn).setOnClickListener { restartGame() }
 
         handler.post(gameLoop)
     }
 
-    private fun moveEnemy() {
-        var y = enemy.y
-        y += 20
+    // פונקציה לעדכון תצוגת הלבבות
+    private fun updateHearts() {
+        heart1.visibility = if (lives >= 1) View.VISIBLE else View.INVISIBLE
+        heart2.visibility = if (lives >= 2) View.VISIBLE else View.INVISIBLE
+        heart3.visibility = if (lives >= 3) View.VISIBLE else View.INVISIBLE
+    }
 
-        if (y > 2000) {
-            y = -200f
+    private fun updateCarPosition() {
+        carLane0.visibility = if (carLane == 0) View.VISIBLE else View.INVISIBLE
+        playerCar.visibility = if (carLane == 1) View.VISIBLE else View.INVISIBLE
+        carLane2.visibility = if (carLane == 2) View.VISIBLE else View.INVISIBLE
+    }
+
+    private fun moveObstacles() {
+        for (i in ROWS - 1 downTo 1) {
+            for (j in 0 until COLS) {
+                obstacleMatrix[i][j].visibility = obstacleMatrix[i - 1][j].visibility
+            }
         }
+        for (j in 0 until COLS) obstacleMatrix[0][j].visibility = View.INVISIBLE
 
-        enemy.y = y
+        var exists = false
+        for (i in 0 until ROWS) for (j in 0 until COLS) if (obstacleMatrix[i][j].visibility == View.VISIBLE) exists = true
+
+        if (!exists) obstacleMatrix[0][Random.nextInt(COLS)].visibility = View.VISIBLE
     }
 
     private fun checkCollision() {
-        if (isColliding(car, enemy)) {
-
-            enemy.y = -200f
+        if (obstacleMatrix[ROWS - 1][carLane].visibility == View.VISIBLE) {
+            vibrate()
+            Toast.makeText(this, "U GOT HIT", Toast.LENGTH_SHORT).show()
 
             lives--
-            updateLives()
+            updateHearts() // עדכון הלבבות במקום הטקסט
 
-            Toast.makeText(this, "נפגעת! ירד חיים", Toast.LENGTH_SHORT).show()
+            obstacleMatrix[ROWS - 1][carLane].visibility = View.INVISIBLE
 
             if (lives <= 0) {
                 gameOver = true
-                restartBtn.visibility = View.VISIBLE
-                Toast.makeText(this, "Game Over", Toast.LENGTH_LONG).show()
+                findViewById<Button>(R.id.restartBtn).visibility = View.VISIBLE
             }
         }
     }
 
-    private fun isColliding(a: View, b: View): Boolean {
-        return a.x < b.x + b.width &&
-                a.x + a.width > b.x &&
-                a.y < b.y + b.height &&
-                a.y + a.height > b.y
-    }
-
-    private fun updateLives() {
-        livesText.text = "Lives: $lives"
+    private fun vibrate() {
+        val vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            vibrator.vibrate(VibrationEffect.createOneShot(300, VibrationEffect.DEFAULT_AMPLITUDE))
+        } else {
+            @Suppress("DEPRECATION")
+            vibrator.vibrate(300)
+        }
     }
 
     private fun restartGame() {
         lives = 3
+        carLane = 1
+        updateHearts() // החזרת כל הלבבות
+        updateCarPosition()
         gameOver = false
-        carX = 300f
-
-        car.x = carX
-        enemy.y = -200f
-
-        restartBtn.visibility = View.GONE
-
-        updateLives()
+        findViewById<Button>(R.id.restartBtn).visibility = View.GONE
+        for (row in obstacleMatrix) for (col in row) col.visibility = View.INVISIBLE
         handler.post(gameLoop)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        handler.removeCallbacks(gameLoop)
     }
 }

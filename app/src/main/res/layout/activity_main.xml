@@ -4,52 +4,71 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF">
 
-    <TextView
-        android:id="@+id/livesText"
+    <LinearLayout
+        android:id="@+id/heartsContainer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Lives: 3"
-        android:textSize="20sp"
-        android:layout_margin="10dp"/>
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="16dp"
+        android:orientation="horizontal">
 
-    <View
-        android:id="@+id/car"
-        android:layout_width="80dp"
-        android:layout_height="120dp"
-        android:background="#0000FF"
-        android:layout_marginTop="600dp"
-        android:layout_marginLeft="300dp"/>
+        <ImageView android:id="@+id/heart1" android:layout_width="40dp" android:layout_height="40dp" android:src="@drawable/my_lev" android:scaleType="fitCenter"/>
+        <ImageView android:id="@+id/heart2" android:layout_width="40dp" android:layout_height="40dp" android:src="@drawable/my_lev" android:scaleType="fitCenter"/>
+        <ImageView android:id="@+id/heart3" android:layout_width="40dp" android:layout_height="40dp" android:src="@drawable/my_lev" android:scaleType="fitCenter"/>
+    </LinearLayout>
 
-    <View
-        android:id="@+id/enemy"
-        android:layout_width="80dp"
-        android:layout_height="120dp"
-        android:background="#FF0000"
-        android:layout_marginTop="0dp"
-        android:layout_marginLeft="300dp"/>
+    <LinearLayout
+        android:id="@+id/gameContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottomButtons"
+        android:orientation="vertical"
+        android:weightSum="6">
 
-    <Button
-        android:id="@+id/leftBtn"
-        android:layout_width="120dp"
-        android:layout_height="100dp"
-        android:text="LEFT"
+        <LinearLayout android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1" android:orientation="horizontal" android:weightSum="3">
+            <ImageView android:id="@+id/obs_0_0" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:src="@drawable/mihshol" android:visibility="invisible"/>
+            <ImageView android:id="@+id/obs_0_1" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:src="@drawable/mihshol" android:visibility="invisible"/>
+            <ImageView android:id="@+id/obs_0_2" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:src="@drawable/mihshol" android:visibility="invisible"/>
+        </LinearLayout>
+        <LinearLayout android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1" android:orientation="horizontal" android:weightSum="3">
+            <ImageView android:id="@+id/obs_1_0" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:src="@drawable/mihshol" android:visibility="invisible"/>
+            <ImageView android:id="@+id/obs_1_1" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:src="@drawable/mihshol" android:visibility="invisible"/>
+            <ImageView android:id="@+id/obs_1_2" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:src="@drawable/mihshol" android:visibility="invisible"/>
+        </LinearLayout>
+        <LinearLayout android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1" android:orientation="horizontal" android:weightSum="3">
+            <ImageView android:id="@+id/obs_2_0" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:src="@drawable/mihshol" android:visibility="invisible"/>
+            <ImageView android:id="@+id/obs_2_1" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:src="@drawable/mihshol" android:visibility="invisible"/>
+            <ImageView android:id="@+id/obs_2_2" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:src="@drawable/mihshol" android:visibility="invisible"/>
+        </LinearLayout>
+        <LinearLayout android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1" android:orientation="horizontal" android:weightSum="3">
+            <ImageView android:id="@+id/obs_3_0" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:src="@drawable/mihshol" android:visibility="invisible"/>
+            <ImageView android:id="@+id/obs_3_1" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:src="@drawable/mihshol" android:visibility="invisible"/>
+            <ImageView android:id="@+id/obs_3_2" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:src="@drawable/mihshol" android:visibility="invisible"/>
+        </LinearLayout>
+        <LinearLayout android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1" android:orientation="horizontal" android:weightSum="3">
+            <ImageView android:id="@+id/obs_4_0" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:src="@drawable/mihshol" android:visibility="invisible"/>
+            <ImageView android:id="@+id/obs_4_1" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:src="@drawable/mihshol" android:visibility="invisible"/>
+            <ImageView android:id="@+id/obs_4_2" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:src="@drawable/mihshol" android:visibility="invisible"/>
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1" android:orientation="horizontal" android:weightSum="3">
+            <ImageView android:id="@+id/car_lane_0" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:src="@drawable/my_car" android:visibility="invisible"/>
+            <ImageView android:id="@+id/playerCar" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:src="@drawable/my_car" android:visibility="visible"/>
+            <ImageView android:id="@+id/car_lane_2" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:src="@drawable/my_car" android:visibility="invisible"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/bottomButtons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"/>
+        android:padding="20dp">
+        <Button android:id="@+id/leftBtn" android:layout_width="120dp" android:layout_height="80dp" android:text="LEFT"/>
+        <Button android:id="@+id/rightBtn" android:layout_width="120dp" android:layout_height="80dp" android:text="RIGHT" android:layout_alignParentRight="true"/>
+    </RelativeLayout>
 
-    <Button
-        android:id="@+id/rightBtn"
-        android:layout_width="120dp"
-        android:layout_height="100dp"
-        android:text="RIGHT"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"/>
-
-    <Button
-        android:id="@+id/restartBtn"
-        android:layout_width="200dp"
-        android:layout_height="100dp"
-        android:text="RESTART"
-        android:visibility="gone"
-        android:layout_centerInParent="true"/>
-
+    <Button android:id="@+id/restartBtn" android:layout_width="200dp" android:layout_height="100dp" android:text="RESTART" android:visibility="gone" android:layout_centerInParent="true"/>
 </RelativeLayout>
