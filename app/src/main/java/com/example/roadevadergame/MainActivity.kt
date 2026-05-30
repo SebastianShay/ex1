@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // קישור לרכיבים מה-XML
+
         playerCar = findViewById(R.id.playerCar)
         carLane0 = findViewById(R.id.car_lane_0)
         carLane2 = findViewById(R.id.car_lane_2)
@@ -63,7 +63,7 @@ class MainActivity : AppCompatActivity() {
         handler.post(gameLoop)
     }
 
-    // פונקציה לעדכון תצוגת הלבבות
+
     private fun updateHearts() {
         heart1.visibility = if (lives >= 1) View.VISIBLE else View.INVISIBLE
         heart2.visibility = if (lives >= 2) View.VISIBLE else View.INVISIBLE
@@ -96,7 +96,7 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, "U GOT HIT", Toast.LENGTH_SHORT).show()
 
             lives--
-            updateHearts() // עדכון הלבבות במקום הטקסט
+            updateHearts()
 
             obstacleMatrix[ROWS - 1][carLane].visibility = View.INVISIBLE
 
@@ -120,7 +120,7 @@ class MainActivity : AppCompatActivity() {
     private fun restartGame() {
         lives = 3
         carLane = 1
-        updateHearts() // החזרת כל הלבבות
+        updateHearts()
         updateCarPosition()
         gameOver = false
         findViewById<Button>(R.id.restartBtn).visibility = View.GONE
